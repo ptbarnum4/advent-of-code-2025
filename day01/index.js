@@ -15,56 +15,49 @@ const day01PartOne = async () => {
     return under * neg;
   });
 
-  /** @type {number[]} */
-  const paths = [];
-
   let current = 50;
+  let zeros = 0;
 
   nums.forEach(n => {
     const total = current + n;
+    current = total;
 
     if (total < 0) {
-      const next = 100 + (total % 100);
-      current = next;
-      return paths.push(next);
-    }
-    if (total > 99) {
-      const next = total % 100;
-      current = next;
-      return paths.push(next);
+      current = 100 + total;
     }
 
-    current = total;
-    paths.push(total);
+    if (total > 99) {
+      current = total % 100;
+    }
+
+    if (current === 0) {
+      zeros++;
+    }
   });
 
-  const zeroCount = paths.filter(v => v === 0).length;
-
-  console.log('Total: ', zeroCount); // 1168
+  console.log('Total: ', zeros); // 1168
 };
 
 const day01PartTwo = async () => {
   // const parsed = await getParsedData('example.txt');
   const parsed = await getParsedData();
+
+  let current = 50;
+  let zeros = 0;
+
   const nums = parsed.map(l => {
     const neg = l[0] === 'L' ? -1 : 1;
     const n = parseInt(l.replaceAll(/[^0-9]/g, ''));
     const rotations = Math.floor(Math.abs(n) / 100);
 
-    const under = n % 100;
-    const num = under * neg;
-
-    return { rotations, num };
-  });
-
-  let current = 50;
-  let zeros = 0;
-
-  nums.forEach(({ rotations, num }) => {
-    const total = current + num;
-
     // Always count rotations
     zeros += rotations;
+
+    return (n % 100) * neg;
+  });
+
+  nums.forEach(num => {
+    const total = current + num;
 
     if (total < 0) {
       // Omit zeros on decrement when current is zero
@@ -92,4 +85,5 @@ const day01PartTwo = async () => {
   console.log('Total: ', zeros); // 7199
 };
 
+// module.exports = day01PartOne;
 module.exports = day01PartTwo;
