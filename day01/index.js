@@ -63,7 +63,6 @@ const day01PartTwo = async () => {
   let current = 50;
   let zeros = 0;
 
-  console.log(`The dial starts pointing at ${current}`);
   nums.forEach(({ rotations, num }) => {
     const total = current + num;
 
