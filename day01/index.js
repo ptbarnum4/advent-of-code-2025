@@ -40,9 +40,7 @@ const day01PartOne = async () => {
 
   const zeroCount = paths.filter(v => v === 0).length;
 
-  console.log('Total: ', zeroCount);
-
-  // Total: 1168
+  console.log('Total: ', zeroCount); // 1168
 };
 
 const day01PartTwo = async () => {
@@ -55,9 +53,8 @@ const day01PartTwo = async () => {
 
     const under = n % 100;
     const num = under * neg;
-    const v = { rotations, num, n };
-    // console.log(v);
-    return v;
+
+    return { rotations, num };
   });
 
   let current = 50;
@@ -66,30 +63,33 @@ const day01PartTwo = async () => {
   nums.forEach(({ rotations, num }) => {
     const total = current + num;
 
+    // Always count rotations
     zeros += rotations;
-    const prev = current;
 
     if (total < 0) {
-      const next = 100 + total;
+      // Omit zeros on decrement when current is zero
       if (current !== 0) {
         zeros++;
       }
-      current = next;
-    } else if (total > 99) {
-      const next = total % 100;
+      // get backtick from 100
+      current = 100 + total;
+      return;
+    }
+    if (total > 99) {
+      // Always count the increment over 0
       zeros++;
-      current = next;
-    } else {
-      current = total;
-      if (total === 0) {
-        zeros++;
-      }
+      current = total % 100;
+      return;
+    }
+
+    current = total;
+    if (total === 0) {
+      // Catch when landing on 0
+      zeros++;
     }
   });
 
-  console.log('Total: ', zeros);
-
-  // 7199
+  console.log('Total: ', zeros); // 7199
 };
 
 module.exports = day01PartTwo;
