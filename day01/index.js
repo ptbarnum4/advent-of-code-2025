@@ -15,6 +15,7 @@ const day01PartOne = async () => {
     return under * neg;
   });
 
+  /** @type {number[]} */
   const paths = [];
 
   let current = 50;
