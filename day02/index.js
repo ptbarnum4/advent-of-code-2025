@@ -22,7 +22,7 @@ const getParsedData = async (file = 'data.txt') => {
  * looking for any ID which is made only of some sequence of digits repeated twice.
  * So, 55 (5 twice), 6464 (64 twice), and 123123 (123 twice) would all be invalid IDs.
  */
-const checkRepeatTwice = (str) => {
+const checkRepeatTwice = str => {
   const len = str.length;
   // only check even length strings
   if (len % 2 !== 0) {
@@ -81,29 +81,20 @@ const day02PartOne = async () => {
  */
 const checkRepeatAny = str => {
   const len = str.length;
-  // only check even length strings
 
   const minLength = 1;
   const maxLength = Math.floor(str.length / 2);
 
-  const repeats = [];
   for (let i = minLength; i <= maxLength; i++) {
-    if (len % i !== 0) {
-      // not possible to repeat n times
-      continue;
-    }
-    const segments = new Array(len / i).fill(0).map((_, j) => {
-      const s = i * j;
-      const e = s + i;
-      return str.slice(s, e);
-    });
+    // only check even length strings
+    if (len % i === 0) {
+      const segments = new Array(len / i).fill(0).map((_, j) => str.slice(i * j, i * j + i));
 
-    const [a, ...rest] = segments;
+      const [a, ...bc] = segments;
 
-    const match = rest.every(v => v === a);
-
-    if (match) {
-      return true;
+      if (bc.every(v => v === a)) {
+        return true;
+      }
     }
   }
   return false;
@@ -146,4 +137,4 @@ const day02PartTwo = async () => {
 };
 
 module.exports = day02PartOne;
-module.exports = day02PartTwo;
+// module.exports = day02PartTwo;
