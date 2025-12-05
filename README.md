@@ -7,7 +7,7 @@
 </p>
 
 <p align='center' style='color:yellow;'>
-  <img width='20px' height='auto' src='assets/badges/star.svg'/>
+  <img width='64px' height='auto' src='assets/badges/bananostar.png'/>
 </p>
 
 <p align='center'>
