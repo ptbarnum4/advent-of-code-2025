@@ -64,4 +64,4 @@ The total output joltage is now much larger: `987654321111` + `811111111119` + `
 
 > **_What is the new total output joltage?_**
 >
-> Answer: `TBD`
+> Answer: `169077317650774`
