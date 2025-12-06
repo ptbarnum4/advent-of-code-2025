@@ -2,14 +2,18 @@
 
 # Day 12: [Problem Name]
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 
 > **PROMPT _PART 1_**
+>
+> Answer: `TBD`
 
 ---
 
 ## Part Two
 
 > **PROMPT _PART 2_**
+>
+> Answer: `TBD`

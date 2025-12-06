@@ -1,8 +1,10 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-/** @returns {Promise<{start: string, end: string }[]>} */
-const getParsedData = async (file = 'data.txt') => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const getParsedData = async (file = 'data.txt'): Promise<{ start: string; end: string }[]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
   return data
     .replaceAll(/\r?\n/g, '')
@@ -10,19 +12,11 @@ const getParsedData = async (file = 'data.txt') => {
     .map(l => {
       const [start, end] = l.split('-');
       return { start, end };
-    });
+    }) as { start: string; end: string }[];
 };
 
-/**
- * Check if a sequence of numbers repeats twice in number string
- * @param {string} str
- *
- * @example
- * Since the young Elf was just doing silly patterns, you can find the invalid IDs by
- * looking for any ID which is made only of some sequence of digits repeated twice.
- * So, 55 (5 twice), 6464 (64 twice), and 123123 (123 twice) would all be invalid IDs.
- */
-const checkRepeatTwice = str => {
+/** Check if a sequence of numbers repeats twice in number string */
+const checkRepeatTwice = (str: string) => {
   const len = str.length;
   // only check even length strings
   if (len % 2 !== 0) {
@@ -35,12 +29,7 @@ const checkRepeatTwice = str => {
   }
 };
 
-/**
- *
- * @param {string} start
- * @param {string} end
- */
-const findInvalidIds = (start, end) => {
+const findInvalidIds = (start: string, end: string) => {
   let total = 0;
 
   for (let i = parseInt(start); i <= parseInt(end); i++) {
@@ -57,7 +46,6 @@ const findInvalidIds = (start, end) => {
 
 const day02PartOne = async () => {
   const lines = await getParsedData();
-  // const lines = await getParsedData('example.txt');
 
   const data = lines.map(({ start, end }) => ({
     start,
@@ -70,16 +58,8 @@ const day02PartOne = async () => {
   console.log(`Total: ${total}`, total === '29940924880'); // 29940924880
 };
 
-/**
- * Check if a sequence of numbers repeats twice in number string
- * @param {string} str
- *
- * @example
- * Since the young Elf was just doing silly patterns, you can find the invalid IDs by
- * looking for any ID which is made only of some sequence of digits repeated twice.
- * So, 55 (5 twice), 6464 (64 twice), and 123123 (123 twice) would all be invalid IDs.
- */
-const checkRepeatAny = str => {
+/** Check if a sequence of numbers repeats twice in number string */
+const checkRepeatAny = (str: string) => {
   const len = str.length;
 
   const minLength = 1;
@@ -100,12 +80,7 @@ const checkRepeatAny = str => {
   return false;
 };
 
-/**
- *
- * @param {string} start
- * @param {string} end
- */
-const findAnyInvalidIds = (start, end) => {
+const findAnyInvalidIds = (start: string, end: string) => {
   let total = 0;
 
   for (let s = parseInt(start); s <= parseInt(end); s++) {
@@ -136,5 +111,9 @@ const day02PartTwo = async () => {
   console.log(`Total: ${total}`, total === '48631958998'); // 48631958998
 };
 
-module.exports = day02PartOne;
-// module.exports = day02PartTwo;
+const day02 = async () => {
+  await day02PartOne();
+  await day02PartTwo();
+};
+
+export default day02;

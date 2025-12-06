@@ -2,7 +2,7 @@
 
 # Day 05: Cafeteria
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 

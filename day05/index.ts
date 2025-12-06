@@ -1,22 +1,21 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-/** @returns {Promise<{ranges: number[][]; ids: number[] }>} */
-const getParsedData = async (file = 'data.txt') => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const getParsedData = async (file = 'data.txt'): Promise<{ ranges: number[][]; ids: number[] }> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
   const [rangesData, idsData] = data.split('\n\n');
-  const ranges = rangesData.split(/\r?\n/).map(v => v.split('-').map(v => parseInt(v)));
-  const ids = idsData.split(/\r?\n/).map(v => parseInt(v));
+  const ranges = rangesData?.split(/\r?\n/).map(v => v.split('-').map(v => parseInt(v)));
+  const ids = idsData?.split(/\r?\n/).map(v => parseInt(v));
 
-  return { ranges, ids };
+  return { ranges, ids } as { ranges: number[][]; ids: number[] };
 };
 
-/**
- * @param {number} id
- * @param {number[]} range
- */
-const isInRange = (id, range) => {
-  const [from, to] = range;
+const isInRange = (id: number, range: number[]) => {
+  const [from, to] = range as [number, number];
+
   if (id >= from && id <= to) {
     return true;
   }
@@ -24,36 +23,30 @@ const isInRange = (id, range) => {
   return false;
 };
 
-/**
- * @param {number} id
- * @param {number[][]} ranges
- */
-const isInRanges = (id, ranges) => {
+const isInRanges = (id: number, ranges: number[][]) => {
   for (let i = 0; i < ranges.length; i++) {
-    const [from, to] = ranges[i];
-    if (isInRange(id, ranges[i])) {
+    const r = ranges[i];
+    if (r && isInRange(id, r)) {
       return true;
     }
   }
   return false;
 };
 
-/** @param {number[][]} ranges */
-const groupRanges = ranges => {
-  /** @type {number[][]} ranges */
-  const newRanges = [];
+const groupRanges = (ranges: number[][]) => {
+  const newRanges: number[][] = [];
 
   ranges.forEach(range => {
-    let [start, end] = range;
+    let [start, end] = range as [number, number];
 
     for (let i = 0; i < ranges.length; i++) {
-      const rangeToCheck = ranges[i];
+      const rangeToCheck = ranges[i] as [number, number];
       // If start digit is in current range
-      if (isInRange(start, rangeToCheck)) {
+      if (start && rangeToCheck && isInRange(start, rangeToCheck)) {
         start = rangeToCheck[0];
       }
       // If end digit is in current range
-      if (isInRange(end, rangeToCheck)) {
+      if (end && isInRange(end, rangeToCheck)) {
         end = rangeToCheck[1];
       }
     }
@@ -80,16 +73,16 @@ const day05 = async () => {
   const { ranges, ids } = await getParsedData();
 
   // Part One
-  const freshCount = ids.filter(id => isInRanges(id, ranges)).length;
+  const freshCount = ids?.filter(id => ranges && isInRanges(id, ranges)).length;
   console.log('Fresh Items:', freshCount, freshCount === 601); // 601
 
   // Part Two
-  const sum = groupRanges(ranges.slice(0).sort(([a], [b]) => a - b)).reduce(
-    (total, [a, b]) => total + b - a + 1,
+  const sum = groupRanges(ranges?.slice(0).sort(([a], [b]) => (a ?? 0) - (b ?? 0)) ?? []).reduce(
+    (total, [a, b]) => total + (b ?? 0) - (a ?? 0) + 1,
     0
   );
 
   console.log('Total Fresh IDs', sum, sum === 367899984917516);
 };
 
-module.exports = day05;
+export default day05;

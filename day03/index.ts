@@ -1,22 +1,22 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-/** @returns {Promise<number[][]>} */
-const getParsedData = async (file = 'data.txt') => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const getParsedData = async (file = 'data.txt'): Promise<number[][]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
   return data.split(/\r?\n/).map(line => line.split('').map(v => parseInt(v)));
 };
 
-/**
- * Find the largest number available for number length
- * @param {number[]} nums
- * @param {number} max
- * @param {number} index
- * @param {number} largest
- * @param {string} currentNumber
- * @returns {number}
- */
-const findLargestN = (nums, max = 12, index = 0, largest = 0, currentNumber = '') => {
+/** Find the largest number available for number length */
+const findLargestN = (
+  nums: number[],
+  max: number = 12,
+  index: number = 0,
+  largest: number = 0,
+  currentNumber: string = ''
+): number => {
   const maxNum = parseInt('9'.repeat(max));
 
   if (currentNumber.length === max) {
@@ -40,18 +40,16 @@ const findLargestN = (nums, max = 12, index = 0, largest = 0, currentNumber = ''
   return largest;
 };
 
-/**
- * Find the next largest digit within range
- * @param {number[]} nums
- * @param {number} startIndex
- * @param {number} toOffset
- * @returns {{ largest: number; index: number }}
- */
-const findNextLargestDigitInRange = (nums, startIndex, toOffset) => {
+/** Find the next largest digit within range */
+const findNextLargestDigitInRange = (
+  nums: number[],
+  startIndex: number,
+  toOffset: number
+): { largest: number; index: number } => {
   let largest = 0;
   let largestIndex = -1;
   for (let i = startIndex; i < nums.length - toOffset; i++) {
-    const n = nums[i];
+    const n = nums[i] ?? 0;
     if (n > largest) {
       largest = n;
       largestIndex = i;
@@ -59,14 +57,8 @@ const findNextLargestDigitInRange = (nums, startIndex, toOffset) => {
   }
   return { largest, index: largestIndex };
 };
-/**
- * Finds the largest digits available in a list of numbers
- * @param {number[]} nums
- * @param {number} max
- * @returns {number[]}
- *
- */
-const reduceToLargestDigits = (nums, max = 12) => {
+/** Finds the largest digits available in a list of numbers */
+const reduceToLargestDigits = (nums: number[], max: number = 12): number[] => {
   const { largest: initLargest, index } = findNextLargestDigitInRange(nums, 0, max);
   let current = `${initLargest}`;
   let lastIndex = index;
@@ -82,12 +74,8 @@ const reduceToLargestDigits = (nums, max = 12) => {
   return current.split('').map(v => parseInt(v));
 };
 
-/**
- *
- * @param {number} n
- * @param {number} expected
- */
-const findLargestNumber = async (n, expected) => {
+/** Primary helper */
+const findLargestNumber = async (n: number, expected: number) => {
   const lines = await getParsedData();
 
   const result = lines
@@ -102,4 +90,4 @@ const day03 = async () => {
   await findLargestNumber(12, 169077317650774);
 };
 
-module.exports = day03;
+export default day03;

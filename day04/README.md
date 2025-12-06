@@ -2,7 +2,7 @@
 
 # Day 04: Printing Department
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 

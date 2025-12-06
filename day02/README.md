@@ -2,7 +2,7 @@
 
 # Day 02: Gift Shop
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 

@@ -2,21 +2,27 @@
   "name": "advent-of-code-2023",
   "version": "1.0.0",
   "description": "Advent of Code 2023",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --stack-size=8096 index",
-    "dev": "nodemon --stack-size=8096 index",
-    "reset-all": "node _reset-all.js",
+    "dev": "node --watch --stack-size=8096 -r ts-node/register index.ts",
+    "reset-all": "node -r ts-node/register _reset-all.ts",
     "lint": "eslint . --fix"
   },
+  "type": "module",
   "author": "Peter Barnum",
   "license": "ISC",
   "dependencies": {
-    "cli-color": "^2.0.3"
+    "cli-color": "^2.0.4"
   },
   "devDependencies": {
-    "eslint": "^8.55.0",
-    "nodemon": "^3.0.2"
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
   }
 }

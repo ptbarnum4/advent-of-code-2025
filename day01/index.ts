@@ -1,8 +1,10 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-/** @returns {Promise<string[]>} */
-const getParsedData = async (file = 'data.txt') => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const getParsedData = async (file = 'data.txt'): Promise<string[]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
   return data.split(/\r?\n/);
 };
@@ -35,7 +37,7 @@ const day01PartOne = async () => {
     }
   });
 
-  console.log('Total: ', zeros); // 1168
+  console.log('Total: ', zeros, zeros === 1168); // 1168
 };
 
 const day01PartTwo = async () => {
@@ -82,8 +84,11 @@ const day01PartTwo = async () => {
     }
   });
 
-  console.log('Total: ', zeros); // 7199
+  console.log('Total: ', zeros, zeros === 7199); // 7199
 };
 
-// module.exports = day01PartOne;
-module.exports = day01PartTwo;
+const day01 = async () => {
+  await day01PartOne();
+  await day01PartTwo();
+};
+export default day01;

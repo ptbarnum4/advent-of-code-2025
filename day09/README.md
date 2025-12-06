@@ -1,15 +1,19 @@
 [Back](../README.md)
 
-# Day 09: [Problem Name]
+# Day 9: [Problem Name]
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 
 > **PROMPT _PART 1_**
+>
+> Answer: `TBD`
 
 ---
 
 ## Part Two
 
 > **PROMPT _PART 2_**
+>
+> Answer: `TBD`

@@ -1,9 +1,5 @@
-/**
- * Return formatted diff from `startTime` - now
- * @param {number} start
- * @returns
- */
-module.exports.formatTime = start => {
+/** Return formatted diff from `startTime` - now */
+export const formatTime = (start: number) => {
   const now = Date.now();
   const diff = now - start;
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);

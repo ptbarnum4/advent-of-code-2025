@@ -2,7 +2,7 @@
 
 # Day 06: Trash Compactor
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 

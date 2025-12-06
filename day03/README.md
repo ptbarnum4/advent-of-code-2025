@@ -2,7 +2,7 @@
 
 # Day 03: Lobby
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 

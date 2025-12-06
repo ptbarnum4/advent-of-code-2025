@@ -2,7 +2,7 @@
 
 # Day [Problem Day]: [Problem Name]
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 

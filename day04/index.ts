@@ -1,8 +1,10 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-/** @returns {Promise<string[][]>} */
-const getParsedData = async (file = 'data.txt') => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const getParsedData = async (file = 'data.txt'): Promise<string[][]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
   return data.split(/\r?\n/).map(v => v.split(''));
 };
@@ -12,8 +14,8 @@ const getParsedData = async (file = 'data.txt') => {
  * @param {number} x
  * @param {number} y
  */
-const canMovePaper = (lines, x, y) => {
-  if (lines[x][y] !== '@') {
+const canMovePaper = (lines: string[][], x: number, y: number) => {
+  if (lines[x]?.[y] !== '@') {
     return false;
   }
   const dir = [-1, 0, 1];
@@ -35,15 +37,11 @@ const canMovePaper = (lines, x, y) => {
   return atCount < 4;
 };
 
-/**
- * @param {string[][]} lines
- * @returns {{ clearedLines: string[][]; total: number }}
- */
-const countAndSwap = lines => {
+const countAndSwap = (lines: string[][]): { clearedLines: string[][]; total: number } => {
   const newLines = [];
 
   for (let x = 0; x < lines.length; x++) {
-    const row = lines[x];
+    const row = lines[x] as string[];
     const newRow = [];
 
     for (let y = 0; y < row.length; y++) {
@@ -60,7 +58,7 @@ const countAndSwap = lines => {
 
   const total = newLines.flat().filter(v => v === 'X').length;
 
-  const clearedLines = newLines.map(l => l.map(v => (v === 'X' ? '.' : v)));
+  const clearedLines = newLines.map(l => l.map(v => (v === 'X' ? '.' : v))) as string[][];
 
   return { clearedLines, total };
 };
@@ -92,4 +90,4 @@ const day04 = async () => {
   await day4PartTwo();
 };
 
-module.exports = day04;
+export default day04;

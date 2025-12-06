@@ -2,7 +2,7 @@
 
 # Day 01: Secret Entrance
 
-[Code](./index.js)
+[Code](./index.ts)
 
 ## Part One
 
