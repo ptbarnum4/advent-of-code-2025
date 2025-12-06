@@ -9,20 +9,21 @@ const getParsedData = async (file = 'data.txt'): Promise<string[]> => {
   return data.split(/\r?\n/);
 };
 
-const day9PartOne = async () => {
+export const day09PartOne = async () => {
   const lines = await getParsedData();
   console.log(lines);
+  return 0;
 };
 
-const day9PartTwo = async () => {
+export const day09PartTwo = async () => {
   const lines = await getParsedData();
   console.log(lines);
+  return 0;
 };
 
-const day9 = async () => {
-  await day9PartOne();
-  // await day9PartTwo();
+const day09 = async () => {
+  await day09PartOne();
+  // await day09PartTwo();
 };
 
-export default day9;
-
+export default day09;

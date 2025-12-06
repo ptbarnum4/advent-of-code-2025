@@ -7,8 +7,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const getParsedData = async (file = 'data.txt'): Promise<{ ranges: number[][]; ids: number[] }> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
   const [rangesData, idsData] = data.split('\n\n');
-  const ranges = rangesData?.split(/\r?\n/).map(v => v.split('-').map(v => parseInt(v)));
-  const ids = idsData?.split(/\r?\n/).map(v => parseInt(v));
+  const ranges = rangesData?.split(/\r?\n/).map((v) => v.split('-').map((v) => parseInt(v)));
+  const ids = idsData?.split(/\r?\n/).map((v) => parseInt(v));
 
   return { ranges, ids } as { ranges: number[][]; ids: number[] };
 };
@@ -36,7 +36,7 @@ const isInRanges = (id: number, ranges: number[][]) => {
 const groupRanges = (ranges: number[][]) => {
   const newRanges: number[][] = [];
 
-  ranges.forEach(range => {
+  ranges.forEach((range) => {
     let [start, end] = range as [number, number];
 
     for (let i = 0; i < ranges.length; i++) {
@@ -69,20 +69,20 @@ const groupRanges = (ranges: number[][]) => {
   return newRanges;
 };
 
-const day05 = async () => {
+export const day05PartOne = async () => {
   const { ranges, ids } = await getParsedData();
 
-  // Part One
-  const freshCount = ids?.filter(id => ranges && isInRanges(id, ranges)).length;
-  console.log('Fresh Items:', freshCount, freshCount === 601); // 601
+  return ids?.filter((id) => ranges && isInRanges(id, ranges)).length;
+};
+export const day05PartTwo = async () => {
+  const { ranges } = await getParsedData();
+  const sorted = ranges?.slice(0).sort(([a = 0], [b = 0]) => a - b) ?? [];
+  return groupRanges(sorted).reduce((total, [a = 0, b = 0]) => total + b - a + 1, 0);
+};
 
-  // Part Two
-  const sum = groupRanges(ranges?.slice(0).sort(([a], [b]) => (a ?? 0) - (b ?? 0)) ?? []).reduce(
-    (total, [a, b]) => total + (b ?? 0) - (a ?? 0) + 1,
-    0
-  );
-
-  console.log('Total Fresh IDs', sum, sum === 367899984917516);
+const day05 = async () => {
+  await day05PartOne();
+  await day05PartTwo();
 };
 
 export default day05;

@@ -4,10 +4,12 @@
   "description": "Advent of Code 2023",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
+    "test:watch": "nodemon --ext ts --exec 'mocha'",
     "start": "node --stack-size=8096 index",
     "dev": "node --watch --stack-size=8096 -r ts-node/register index.ts",
-    "reset-all": "node -r ts-node/register _reset-all.ts",
+    "reset-all": "node -r ts-node/register ./scripts/_reset-all.ts",
+    "add-tests": "node -r ts-node/register ./scripts/createTests.ts",
     "lint": "eslint . --fix"
   },
   "type": "module",
@@ -17,10 +19,15 @@
     "cli-color": "^2.0.4"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^24.10.1",
+    "chai": "^6.2.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
+    "mocha": "^11.7.5",
     "nodemon": "^3.1.11",
+    "prettier": "^3.7.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1"

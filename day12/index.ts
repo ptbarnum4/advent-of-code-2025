@@ -9,14 +9,16 @@ const getParsedData = async (file = 'data.txt'): Promise<string[]> => {
   return data.split(/\r?\n/);
 };
 
-const day12PartOne = async () => {
+export const day12PartOne = async () => {
   const lines = await getParsedData();
   console.log(lines);
+  return 0;
 };
 
-const day12PartTwo = async () => {
+export const day12PartTwo = async () => {
   const lines = await getParsedData();
   console.log(lines);
+  return 0;
 };
 
 const day12 = async () => {
@@ -25,4 +27,3 @@ const day12 = async () => {
 };
 
 export default day12;
-

@@ -9,8 +9,8 @@ const getParsedData = async (file = 'data.txt'): Promise<string[]> => {
   return data.split(/\r?\n/);
 };
 
-const day01PartOne = async () => {
-  const nums = (await getParsedData()).map(l => {
+export const day01PartOne = async () => {
+  const nums = (await getParsedData()).map((l) => {
     const neg = l[0] === 'L' ? -1 : 1;
     const n = parseInt(l.replaceAll(/[^0-9]/g, ''));
     const under = n % 100;
@@ -20,7 +20,7 @@ const day01PartOne = async () => {
   let current = 50;
   let zeros = 0;
 
-  nums.forEach(n => {
+  nums.forEach((n) => {
     const total = current + n;
     current = total;
 
@@ -37,17 +37,16 @@ const day01PartOne = async () => {
     }
   });
 
-  console.log('Total: ', zeros, zeros === 1168); // 1168
+  return zeros;
 };
 
-const day01PartTwo = async () => {
-  // const parsed = await getParsedData('example.txt');
+export const day01PartTwo = async () => {
   const parsed = await getParsedData();
 
   let current = 50;
   let zeros = 0;
 
-  const nums = parsed.map(l => {
+  const nums = parsed.map((l) => {
     const neg = l[0] === 'L' ? -1 : 1;
     const n = parseInt(l.replaceAll(/[^0-9]/g, ''));
     const rotations = Math.floor(Math.abs(n) / 100);
@@ -58,7 +57,7 @@ const day01PartTwo = async () => {
     return (n % 100) * neg;
   });
 
-  nums.forEach(num => {
+  nums.forEach((num) => {
     const total = current + num;
 
     if (total < 0) {
@@ -84,7 +83,7 @@ const day01PartTwo = async () => {
     }
   });
 
-  console.log('Total: ', zeros, zeros === 7199); // 7199
+  return zeros;
 };
 
 const day01 = async () => {

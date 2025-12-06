@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const getParsedData = async (file = 'data.txt'): Promise<string[][]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
-  return data.split(/\r?\n/).map(v => v.split(''));
+  return data.split(/\r?\n/).map((v) => v.split(''));
 };
 
 /**
@@ -22,8 +22,8 @@ const canMovePaper = (lines: string[][], x: number, y: number) => {
 
   let atCount = 0;
 
-  dir.forEach(d1 =>
-    dir.forEach(d2 => {
+  dir.forEach((d1) =>
+    dir.forEach((d2) => {
       const v = lines[x + d1]?.[y + d2];
       if ((!d1 && !d2) || !v) {
         return;
@@ -31,7 +31,7 @@ const canMovePaper = (lines: string[][], x: number, y: number) => {
       if (v === '@') {
         atCount++;
       }
-    })
+    }),
   );
 
   return atCount < 4;
@@ -56,20 +56,19 @@ const countAndSwap = (lines: string[][]): { clearedLines: string[][]; total: num
     newLines.push(newRow);
   }
 
-  const total = newLines.flat().filter(v => v === 'X').length;
+  const total = newLines.flat().filter((v) => v === 'X').length;
 
-  const clearedLines = newLines.map(l => l.map(v => (v === 'X' ? '.' : v))) as string[][];
+  const clearedLines = newLines.map((l) => l.map((v) => (v === 'X' ? '.' : v))) as string[][];
 
   return { clearedLines, total };
 };
 
-const day4PartOne = async () => {
+export const day04PartOne = async () => {
   const lines = await getParsedData();
-  const { total } = countAndSwap(lines);
-  console.log('Total:', total, total === 1457); // 1457
+  return countAndSwap(lines).total;
 };
 
-const day4PartTwo = async () => {
+export const day04PartTwo = async () => {
   const lines = await getParsedData();
 
   let currentLines = lines;
@@ -82,12 +81,12 @@ const day4PartTwo = async () => {
     finalTotal += total;
     currentLines = clearedLines;
   }
-  console.log('Total:', finalTotal, finalTotal === 8310); // 8310
+  return finalTotal;
 };
 
 const day04 = async () => {
-  await day4PartOne();
-  await day4PartTwo();
+  await day04PartOne();
+  await day04PartTwo();
 };
 
 export default day04;

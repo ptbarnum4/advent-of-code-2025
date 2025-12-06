@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const getParsedData = async (file = 'data.txt'): Promise<number[][]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
-  return data.split(/\r?\n/).map(line => line.split('').map(v => parseInt(v)));
+  return data.split(/\r?\n/).map((line) => line.split('').map((v) => parseInt(v)));
 };
 
 /** Find the largest number available for number length */
@@ -15,7 +15,7 @@ const findLargestN = (
   max: number = 12,
   index: number = 0,
   largest: number = 0,
-  currentNumber: string = ''
+  currentNumber: string = '',
 ): number => {
   const maxNum = parseInt('9'.repeat(max));
 
@@ -44,7 +44,7 @@ const findLargestN = (
 const findNextLargestDigitInRange = (
   nums: number[],
   startIndex: number,
-  toOffset: number
+  toOffset: number,
 ): { largest: number; index: number } => {
   let largest = 0;
   let largestIndex = -1;
@@ -71,23 +71,27 @@ const reduceToLargestDigits = (nums: number[], max: number = 12): number[] => {
       lastIndex = index;
     }
   }
-  return current.split('').map(v => parseInt(v));
+  return current.split('').map((v) => parseInt(v));
 };
 
 /** Primary helper */
-const findLargestNumber = async (n: number, expected: number) => {
+const findLargestNumber = async (n: number) => {
   const lines = await getParsedData();
 
   const result = lines
-    .map(nums => findLargestN(reduceToLargestDigits(nums), n))
+    .map((nums) => findLargestN(reduceToLargestDigits(nums), n))
     .reduce((total, n) => total + n, 0);
 
-  console.log('Sum:', result, result === expected);
+  return result;
 };
 
+export const day03PartOne = async () => await findLargestNumber(2);
+
+export const day03PartTwo = async () => await findLargestNumber(12);
+
 const day03 = async () => {
-  await findLargestNumber(2, 17166);
-  await findLargestNumber(12, 169077317650774);
+  await day03PartOne();
+  await day03PartTwo();
 };
 
 export default day03;

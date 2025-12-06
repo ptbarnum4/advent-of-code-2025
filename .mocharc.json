@@ -1,0 +1,10 @@
+{
+  "extensions": ["ts"],
+  "spec": ["**/*.spec.ts"],
+  "ignore": ["node_modules/**"],
+  "loader": "ts-node/esm",
+  "node-option": [
+    "loader=ts-node/esm",
+    "no-warnings"
+  ]
+}

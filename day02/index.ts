@@ -9,7 +9,7 @@ const getParsedData = async (file = 'data.txt'): Promise<{ start: string; end: s
   return data
     .replaceAll(/\r?\n/g, '')
     .split(',')
-    .map(l => {
+    .map((l) => {
       const [start, end] = l.split('-');
       return { start, end };
     }) as { start: string; end: string }[];
@@ -44,18 +44,18 @@ const findInvalidIds = (start: string, end: string) => {
   return total;
 };
 
-const day02PartOne = async () => {
+export const day02PartOne = async () => {
   const lines = await getParsedData();
 
   const data = lines.map(({ start, end }) => ({
     start,
     end,
-    total: findInvalidIds(start, end)
+    total: findInvalidIds(start, end),
   }));
 
   const total = data.reduce((total, d) => total + d.total, 0).toString();
 
-  console.log(`Total: ${total}`, total === '29940924880'); // 29940924880
+  return parseInt(total);
 };
 
 /** Check if a sequence of numbers repeats twice in number string */
@@ -72,7 +72,7 @@ const checkRepeatAny = (str: string) => {
 
       const [a, ...bc] = segments;
 
-      if (bc.every(v => v === a)) {
+      if (bc.every((v) => v === a)) {
         return true;
       }
     }
@@ -95,7 +95,7 @@ const findAnyInvalidIds = (start: string, end: string) => {
   return total;
 };
 
-const day02PartTwo = async () => {
+export const day02PartTwo = async () => {
   const lines = await getParsedData();
 
   const data = lines.map(({ start, end }) => {
@@ -108,7 +108,7 @@ const day02PartTwo = async () => {
     }, 0)
     .toString();
 
-  console.log(`Total: ${total}`, total === '48631958998'); // 48631958998
+  return parseInt(total);
 };
 
 const day02 = async () => {
