@@ -54,7 +54,7 @@
     <img width='50px' height='auto' src='assets/badges/incomplete/day8.svg'/>
   </a>
   <a href='day09/README.md'>
-    <img width='50px' height='auto' src='assets/badges/incomplete/day9.svg'/>
+    <img width='50px' height='auto' src='assets/badges/partial/day9.svg'/>
   </a>
   <a href='day10/README.md'>
     <img width='50px' height='auto' src='assets/badges/incomplete/day10.svg'/>

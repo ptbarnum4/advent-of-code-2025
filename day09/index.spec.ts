@@ -5,7 +5,7 @@ describe('Day 9', () => {
   describe('Part 1', async () => {
     it('should return the correct total: TBD', async () => {
       const total = await day09PartOne();
-      expect(total).to.equal(0);
+      expect(total).to.equal(4771508457);
     });
   });
   describe('Part 2', async () => {
