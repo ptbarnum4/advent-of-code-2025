@@ -6,27 +6,29 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const getParsedData = async (file = 'data.txt'): Promise<string[][]> => {
   const data = await fs.readFile(path.resolve(__dirname, file), 'utf8');
-  return data.split(/\r?\n/).map((r) => r.split(''));
+  return data.split(/\r?\n/).map((r) => r.split('').map((v) => (v === '.' ? '.' : v)));
 };
 
-const traverseDown = (lines: string[][], rowIndex: number, colIndexes: Set<number>) => {
-  const prev = lines[rowIndex - 1] as string[];
-  const row = lines[rowIndex] as string[];
+const traverseDown = (
+  grid: string[][],
+  rowIndex: number,
+  colIndexes: Set<number>,
+  allColIndexes: number[][] = [],
+): { grid: string[][]; allColIndexes: number[][] } => {
+  const prev = grid[rowIndex - 1] as string[];
+  const row = grid[rowIndex] as string[];
 
   if (!row || !prev) {
-    return lines;
+    return { grid, allColIndexes };
   }
 
-  if (rowIndex < lines.length) {
+  if (rowIndex < grid.length) {
     colIndexes.forEach((colIndex) => {
       const ch = row[colIndex];
       const pch = prev[colIndex];
-      if (!colIndexes.size) {
-        return lines;
-      }
 
-      if (!ch || rowIndex >= lines.length) {
-        return lines;
+      if (rowIndex >= grid.length) {
+        return { lines: grid, allColIndexes };
       }
 
       if (pch === 'S') {
@@ -52,10 +54,40 @@ const traverseDown = (lines: string[][], rowIndex: number, colIndexes: Set<numbe
         }
       }
     });
-    return traverseDown(lines, rowIndex + 1, colIndexes);
+
+    allColIndexes.push(Array.from(colIndexes.values()));
+    return traverseDown(grid, rowIndex + 1, colIndexes, allColIndexes);
   }
 
-  return lines;
+  return { grid, allColIndexes };
+};
+
+const cachedLR = new Map<string, { left: number; right: number }>();
+
+const walkPathFrom = (grid: string[][], rowIndex: number, colIndex: number): number => {
+  if (rowIndex >= grid.length) {
+    return 1;
+  }
+
+  const ch = grid[rowIndex]?.[colIndex];
+
+  const nextCh = grid[rowIndex + 1]?.[colIndex];
+
+  if (ch === '|' && nextCh === '^') {
+    const clr = cachedLR.get(`${rowIndex},${colIndex}`);
+
+    const left = clr?.left ?? walkPathFrom(grid, rowIndex + 1, colIndex - 1);
+    const right = clr?.right ?? walkPathFrom(grid, rowIndex + 1, colIndex + 1);
+
+    cachedLR.set(`${rowIndex},${colIndex}`, { left, right });
+
+    return left + right;
+  }
+  if (!nextCh) {
+    return 1;
+  }
+
+  return walkPathFrom(grid, rowIndex + 1, colIndex);
 };
 
 const countSplits = (rows: string[][]) => {
@@ -77,19 +109,22 @@ const countSplits = (rows: string[][]) => {
 export const day07PartOne = async () => {
   const lines = await getParsedData();
   const startIndex = lines[0]?.findIndex((v) => v === 'S') ?? 0;
-  const details = traverseDown(lines, 1, new Set([startIndex]));
-  return countSplits(details);
+  traverseDown(lines, 1, new Set([startIndex]));
+  return countSplits(lines);
 };
 
 export const day07PartTwo = async () => {
   const lines = await getParsedData();
-  console.log(lines);
-  return 0;
+  const startIndex = lines[0]?.findIndex((v) => v === 'S') ?? 0;
+  const grid = traverseDown(lines, 1, new Set([startIndex])).grid;
+  const totalPaths = walkPathFrom(grid, 1, startIndex);
+
+  return totalPaths;
 };
 
 const day07 = async () => {
   await day07PartOne();
-  // await day07PartTwo();
+  await day07PartTwo();
 };
 
 export default day07;

@@ -6,5 +6,8 @@
     "scminput": false,
     "csharp": true,
     "javascript": false
-  }
+  },
+  "cSpell.words": [
+    "joltage"
+  ]
 }
