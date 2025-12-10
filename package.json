@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "nodemon --ext ts --exec 'mocha'",
-    "start": "node --stack-size=8096 index",
+    "start": "node --stack-size=8096 -r ts-node/register index.ts",
     "dev": "node --watch --stack-size=8096 -r ts-node/register index.ts",
     "reset-all": "node -r ts-node/register ./scripts/_reset-all.ts",
     "add-tests": "node -r ts-node/register ./scripts/createTests.ts",
