@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import { day11PartOne, day11PartTwo } from './index';
 
-describe('Day 11', () => {
+describe.only('Day 11', () => {
   describe('Part 1', async () => {
-    it('should return the correct total: TBD', async () => {
+    it('should return the correct total: 431', async () => {
       const total = await day11PartOne();
-      expect(total).to.equal(0);
+      expect(total).to.equal(431);
     });
   });
   describe('Part 2', async () => {
